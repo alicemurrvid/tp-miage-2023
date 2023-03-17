@@ -3,7 +3,7 @@
 ## Nom du(des) étudiant(e)(s) de ce monôme/binôme 
 WARNING: NE PAS OUBLIER DE MENTIONNER LES DEUX NOMS SI VOUS ETES EN BINOME!
 
-#XXX# (et #YYY#)
+MURRAY-VIDAL Alice et SCHNEIDER Mickael
 
 Commentaires éventuels des étudiants : #XXXXXX#
 
@@ -58,10 +58,12 @@ Ce test sera faisable après avoir utilisé la fonction todoItems() qui permet d
 docker run -it -e POSTGRES_PASSWORD=password -p 5432:5432 postgres
 ```
 *Expliquer cette ligne de commande (y compris les options utilisées)*
-Cette ligne de commande permet de démarrer un conteneur à partir d'une image. L'option i 
+Cette ligne de commande permet de démarrer un conteneur à partir d'une image. L'option it permet de garder la console de lancement ouverte sur l'écoute du port du container, et créer un bash au sein du container afin d'accéder aux fichiers du docker. L'option -e permet d'initialiser une variables d'environnement pour le docker (ici le mot de passe). L'option -p permet de choisir le port d'accès au container. Pour finir le nom de l'image que l'on souhaite dans notre container (posgres).
+
 * Compléter le code manquant dans la méthode `TodoListController.createTodoItem()`
 
 *Pourquoi `todoItemRepository` est-il `null` ? Quelle est la meilleure façon de l'injecter ?*
+`todoItemRepository` est null car il faut l'injecter. La meilleur façon de le faire est depuis le constructeur.
 
 * Modifier le code en conséquence.
 
