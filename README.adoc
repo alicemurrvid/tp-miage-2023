@@ -43,14 +43,15 @@ TIP: [Rappel Git] Trois dépôts sont ici utilisés: le dépot Github de l'ensei
 * Observer le code du projet `todolist-debut-ex1`
 
 *Le code est-il structuré en couches ? Quel problèmes ce code peut-il poser ?*
-La classe TodoItem servant à la fois d'entité JPA et de DTO fait donc partie de la couche infrastructure et service. Les 3 autres classes font partie d'une couche isolée (TodoItemRepository dans la couche infrastructure, TodoListController dans la couche service et TodoListApplication dans une autre catégorie avec la spécificté d'être un point d'entrée de spring).
+Le code n'est pas structuré en couches, nous n'observons qu'un seul package qui contient toutes les sources. Cela peut poser un problème de lisibilité et donc de maintenance de la solution notamment si elle vient à évoluer avec des ajouts de fonctionnalités.
+La classe TodoItem servant à la fois d'entité JPA et de DTO ferait donc partie de la couche infrastructure et service. Les 3 autres classes feraient partie d'une couche isolée (TodoItemRepository dans la couche infrastructure, TodoListController dans la couche service et TodoListApplication dans une autre catégorie avec la spécificté d'être un point d'entrée de spring).
 
 
 *Où se trouve le code métier (voir la règle de gestion RG 1) ?*
 Le code métier se trouve dans TodoListController.
 
 *Cette règle est-elle facilement testable par un test unitaire ?*
-Il suffit de lister les items qui valident l'assertion disant que leur attribut time est supérieur à 24h. Il faudra ensuite s'assurer qu'ils aient bien la note "[LATE!]".
+Il suffit de lister des items, un  qui valide l'assertion disant que l'attribut time est supérieur à 24h et un autre non. Il faudra ensuite s'assurer que le premier a bien la note "[LATE!]" et que l'autre non.
 Ce test sera faisable après avoir utilisé la fonction todoItems() qui permet d'ajouter la note aux items.
 
 * Lancer une base PostgreSQL en Docker dans un terminal (on lance ici la base en mode interactif pour visualiser son activité. Pour la lancer en tâche de fond, remplacer les options `it` par `d` comme 'daemon'):
@@ -58,7 +59,7 @@ Ce test sera faisable après avoir utilisé la fonction todoItems() qui permet d
 docker run -it -e POSTGRES_PASSWORD=password -p 5432:5432 postgres
 ```
 *Expliquer cette ligne de commande (y compris les options utilisées)*
-Cette ligne de commande permet de démarrer un conteneur à partir d'une image. L'option it permet de garder la console de lancement ouverte sur l'écoute du port du container, et créer un bash au sein du container afin d'accéder aux fichiers du docker. L'option -e permet d'initialiser une variables d'environnement pour le docker (ici le mot de passe). L'option -p permet de choisir le port d'accès au container. Pour finir le nom de l'image que l'on souhaite dans notre container (posgres).
+Cette ligne de commande permet de démarrer un conteneur. L'option -it permet de garder la console de lancement ouverte sur l'écoute du port du container, et créer un bash au sein du container afin d'accéder aux fichiers du docker. L'option -e permet d'initialiser une variable d'environnement pour le docker (ici le mot de passe). L'option -p permet de choisir le port d'accès au container. Pour finir le nom de l'image que l'on souhaite pour notre container (posgres).
 
 * Compléter le code manquant dans la méthode `TodoListController.createTodoItem()`
 
@@ -105,6 +106,7 @@ Source : http://leanpub.com/get-your-hands-dirty-on-clean-architecture[Tom Hombe
   - la couche `domain` qui contient les entités (au sens DDD, pas au sens JPA). En général des classes complexes (méthodes riches, relations entre les entités)
 
 *Rappeler en quelques lignes les grands principes de l'architecture hexagonale.*
+L'architecture hexagonale permet de décomposer une application en plusieurs composants qui communiquent entre eux grace à des ports. Cette décomposition a pour principe d'isoler la partie métier de la partie technique. Cela a pour but d'entres autres faciliter les possibles évolutions en permettant de modifier un composant sans impacter les autres et les tests.
 
 Compléter ce code avec une fonctionnalité de création de `TodoItem`  persisté en base et appelé depuis un endpoint REST `POST /todos` qui :
 
@@ -121,6 +123,7 @@ _Temps estimé : 20 mins_
 * Implémenter (en junit) des TU sur la règle de gestion qui consiste à afficher `[LATE!]` dans la description d'un item en retard de plus de 24h.
 
 *Quels types de tests devra-t-on écrire pour les adapteurs ?* 
+Pour les adapteurs, nous utiliserons des tests d'intégration.
 
 *S'il vous reste du temps, écrire quelques uns de ces types de test.*
 
