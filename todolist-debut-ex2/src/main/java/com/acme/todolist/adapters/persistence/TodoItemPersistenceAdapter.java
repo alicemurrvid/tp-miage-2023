@@ -1,5 +1,6 @@
 package com.acme.todolist.adapters.persistence;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,6 +38,11 @@ public class TodoItemPersistenceAdapter implements LoadTodoItem,UpdateTodoItem {
 				.map(todoItemJpaEntory -> mapper.mapToTodoItem(todoItemJpaEntory)).collect(Collectors.toList());
 	}
 
-	// A compléter
+	@Override
+	public void storeNewTodoItem(TodoItem item) {
+		this.todoItemRepository.save(new TodoItemJpaEntity(item.getId(),item.getTime(),item.getContent(),true));
+	
+	}
+
 
 }
