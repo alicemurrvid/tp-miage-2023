@@ -12,6 +12,7 @@ import javax.persistence.Id;
  * @author bflorat
  *
  */
+
 @Entity
 public class TodoItem {
 	
